@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/theme/light_colors.dart';
+import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
+import 'package:todo_app/todo_domain/models/events.dart';
 import 'package:todo_app/todo_domain/view/widgets/widgets.dart';
 
 class MainDrawerComponent extends StatelessWidget {
@@ -28,28 +31,28 @@ class MainDrawerComponent extends StatelessWidget {
             SideMenuButtonWidget(
               title: "View all tasks",
               onPress: () {
-                // TODO: dispatch action get list of all tasks
+                (context).read<TodoBloc>().add(ReadAllTaskTodoEvent());
                 Navigator.of(context).pushNamed('/list');
               },
             ),
             SideMenuButtonWidget(
               title: "View done tasks",
               onPress: () {
-                // TODO: dispatch action get list of done tasks
+                (context).read<TodoBloc>().add(ReadDoneTaskTodoEvent());
                 Navigator.of(context).pushNamed('/list');
               },
             ),
             SideMenuButtonWidget(
               title: "View in progress tasks",
               onPress: () {
-                // TODO: dispatch action get list of in progress tasks
+                (context).read<TodoBloc>().add(ReadProgressTaskTodoEvent());
                 Navigator.of(context).pushNamed('/list');
               },
             ),
             SideMenuButtonWidget(
               title: "View pending tasks",
               onPress: () {
-                // TODO: dispatch action get list of pending tasks
+                (context).read<TodoBloc>().add(ReadPendingTaskTodoEvent());
                 Navigator.of(context).pushNamed('/list');
               },
             ),

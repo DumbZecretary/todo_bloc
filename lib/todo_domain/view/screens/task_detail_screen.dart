@@ -13,7 +13,7 @@ class TaskDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: LightColors.kLightYellow,
       appBar: TodoAppBar(
-        title: "Add new task",
+        title: "Task detail",
         onPress: () {
           Navigator.of(context).pop();
         },

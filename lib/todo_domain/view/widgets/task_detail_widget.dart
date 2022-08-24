@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/light_colors.dart';
+import 'package:todo_app/todo_domain/models/task_status.dart';
 
 class TaskDetailWidget extends StatelessWidget {
   const TaskDetailWidget(

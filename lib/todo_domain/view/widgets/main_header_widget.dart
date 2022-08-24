@@ -20,7 +20,7 @@ class MainHeaderWidget extends StatelessWidget {
             bottomRight: Radius.circular(40.0),
             bottomLeft: Radius.circular(40.0),
           )),
-      height: height ?? 140,
+      height: height ?? 120,
       width: width ?? 100,
       child: child ?? const SizedBox(),
     );

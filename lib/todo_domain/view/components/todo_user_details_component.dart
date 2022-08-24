@@ -24,14 +24,17 @@ class TodoUserDetailsComponent extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0, vertical: 16.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    const SizedBox(
+                      width: 24,
+                    ),
                     CircularPercentIndicator(
-                      radius: 50.0,
+                      radius: 36.0,
                       lineWidth: 5.0,
                       animation: true,
                       percent: 0.75, // percent of done tasks / all tasks
@@ -44,7 +47,7 @@ class TodoUserDetailsComponent extends StatelessWidget {
                         },
                         child: const CircleAvatar(
                           backgroundColor: LightColors.kBlue,
-                          radius: 35.0,
+                          radius: 24.0,
                           backgroundImage: AssetImage(
                             'assets/images/avatar.png',
                           ),
