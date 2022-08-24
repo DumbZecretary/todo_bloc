@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:todo_app/config_domain/app_model/app_state.dart';
 import 'package:todo_app/theme/light_colors.dart';
 import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
@@ -6,9 +7,21 @@ import 'package:todo_app/todo_domain/repo/hive_repo.dart';
 import 'package:todo_app/todo_domain/view/screens/screens.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodoApp extends StatelessWidget {
+class TodoApp extends StatefulWidget {
   const TodoApp({required this.hiveRepo, Key? key}) : super(key: key);
   final HiveRepo hiveRepo;
+
+  @override
+  State<TodoApp> createState() => _TodoAppState();
+}
+
+class _TodoAppState extends State<TodoApp> {
+  @override
+  void dispose() {
+    Hive.box('tasks').close();
+    Hive.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

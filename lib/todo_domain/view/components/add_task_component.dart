@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/theme/light_colors.dart';
+import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
+import 'package:todo_app/todo_domain/models/events.dart';
+import 'package:todo_app/todo_domain/models/task_model.dart';
+import 'package:todo_app/todo_domain/models/task_status.dart';
 import 'package:todo_app/todo_domain/view/widgets/widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class AddTaskComponent extends StatefulWidget {
   const AddTaskComponent({
@@ -81,15 +87,26 @@ class _AddTaskComponentState extends State<AddTaskComponent> {
               ActionButtonWidget(
                 title: "Add new task",
                 color: LightColors.kBlue,
-                onPress: () {
+                onPress: () async {
+                  var uuid = const Uuid();
+                  final String id = uuid.v1();
+                  final Task task = Task((b) => b
+                    ..id = id
+                    ..status = TaskStatus.pending
+                    ..title = titleController.text
+                    ..desc = descController.text);
+                  (context)
+                      .read<TodoBloc>()
+                      .add(InsertTodoEvent((b) => b..task = task.toBuilder()));
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          content:
-                              Text(titleController.text + descController.text),
+                        return const AlertDialog(
+                          content: Text("Add new task successfully"),
                         );
                       });
+                  Future.delayed(const Duration(milliseconds: 300));
+                  Navigator.of(context).popUntil(ModalRoute.withName('/'));
                 },
               ),
             ],

@@ -1,16 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/config_domain/app.dart';
 import 'package:todo_app/config_domain/observer.dart';
 import 'package:todo_app/config_domain/utils/logging.dart';
+import 'package:todo_app/todo_domain/models/tasks_hive_model.dart';
+
 import 'package:todo_app/todo_domain/repo/hive_repo.dart';
 import 'package:bloc/bloc.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // TODO: instance repo
   final HiveRepo hiveRepo = HiveRepo();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ListTaskHiveModelAdapter());
+  await Hive.openBox<ListTaskHiveModel>('tasks');
   // final SharedPreferences sharedPreferences =
   //     await SharedPreferences.getInstance();
   // final CountingRepoSharedPreferences countingRepoSharedPreferences =
@@ -38,5 +43,7 @@ void bootstrap({required HiveRepo hiveRepo}) {
   );
 }
 
+// TODO: implement progress bar
+// TODO: implement user domain
 // TODO: implement localization
 // TODO: unit test
