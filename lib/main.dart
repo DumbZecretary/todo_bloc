@@ -1,35 +1,42 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:todo_app/theme/light_colors.dart';
-import 'package:todo_app/todo_domain/view/screens/screens.dart';
+import 'package:todo_app/config_domain/app.dart';
+import 'package:todo_app/config_domain/observer.dart';
+import 'package:todo_app/config_domain/utils/logging.dart';
+import 'package:todo_app/todo_domain/repo/hive_repo.dart';
+import 'package:bloc/bloc.dart';
 
 void main() {
-  runApp(
-    const TodoApp(),
+  WidgetsFlutterBinding.ensureInitialized();
+  // TODO: instance repo
+  final HiveRepo hiveRepo = HiveRepo();
+  // final SharedPreferences sharedPreferences =
+  //     await SharedPreferences.getInstance();
+  // final CountingRepoSharedPreferences countingRepoSharedPreferences =
+  // CountingRepoSharedPreferences(sharedPreferences: sharedPreferences);
+  // bootstrap(repo: countingRepoSharedPreferences);
+  bootstrap(hiveRepo: hiveRepo);
+}
+
+void bootstrap({required HiveRepo hiveRepo}) {
+  DebugLogger debugLogger = DebugLogger();
+  FlutterError.onError = (details) {
+    debugLogger.log(details.exceptionAsString(), details.stack);
+  };
+
+  Bloc.observer = TodoAppObserver();
+
+  runZonedGuarded(
+    // TODO: add repo to TodoApp
+    () => runApp(
+      TodoApp(
+        hiveRepo: hiveRepo,
+      ),
+    ),
+    (error, stackTrace) => debugLogger.log(error.toString(), stackTrace),
   );
 }
 
-class TodoApp extends StatelessWidget {
-  const TodoApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Todo App',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-        textTheme: Theme.of(context).textTheme.apply(
-            bodyColor: LightColors.kDarkBlue,
-            displayColor: LightColors.kDarkBlue,
-            fontFamily: 'Poppins'),
-      ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const TodoTrackerScreen(),
-        '/list': (context) => const ListTaskScreen(),
-        '/add': (context) => const AddTaskScreen(),
-        '/detail': (context) => const TaskDetailScreen(),
-      },
-    );
-  }
-}
+// TODO: implement localization
+// TODO: unit test

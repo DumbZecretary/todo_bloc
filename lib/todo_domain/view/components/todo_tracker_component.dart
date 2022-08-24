@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/theme/light_colors.dart';
+import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
+import 'package:todo_app/todo_domain/models/events.dart';
 import 'package:todo_app/todo_domain/view/widgets/widgets.dart';
 
 class TodoTrackerComponent extends StatelessWidget {
@@ -13,7 +16,7 @@ class TodoTrackerComponent extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(
-            height: 20,
+            height: 32,
           ),
           GestureDetector(
             onTap: () {
@@ -37,8 +40,7 @@ class TodoTrackerComponent extends StatelessWidget {
           ),
           Container(
             color: Colors.transparent,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,7 +55,9 @@ class TodoTrackerComponent extends StatelessWidget {
                         title: 'Done',
                         subtitle: '9 tasks',
                         onPress: () {
-                          // TODO: dispatch action get list of done tasks
+                          (context)
+                              .read<TodoBloc>()
+                              .add(ReadDoneTaskTodoEvent());
                           Navigator.of(context).pushNamed('/list');
                         },
                       ),
@@ -66,7 +70,9 @@ class TodoTrackerComponent extends StatelessWidget {
                         title: 'In Progress',
                         subtitle: '5 tasks',
                         onPress: () {
-                          // TODO: dispatch action get list of in progress tasks
+                          (context)
+                              .read<TodoBloc>()
+                              .add(ReadProgressTaskTodoEvent());
                           Navigator.of(context).pushNamed('/list');
                         },
                       ),
@@ -82,7 +88,9 @@ class TodoTrackerComponent extends StatelessWidget {
                         title: 'Pending',
                         subtitle: '9 hours progress',
                         onPress: () {
-                          // TODO: dispatch action get list of pending tasks
+                          (context)
+                              .read<TodoBloc>()
+                              .add(ReadPendingTaskTodoEvent());
                           Navigator.of(context).pushNamed('/list');
                         },
                       ),
@@ -95,7 +103,9 @@ class TodoTrackerComponent extends StatelessWidget {
                         title: 'All',
                         subtitle: '23 tasks',
                         onPress: () {
-                          // TODO: dispatch action get list of all tasks
+                          (context)
+                              .read<TodoBloc>()
+                              .add(ReadAllTaskTodoEvent());
                           Navigator.of(context).pushNamed('/list');
                         },
                       ),
