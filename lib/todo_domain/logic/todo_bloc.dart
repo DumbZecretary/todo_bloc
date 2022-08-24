@@ -8,7 +8,6 @@ import 'package:todo_app/todo_domain/models/events.dart';
 import 'package:todo_app/todo_domain/models/task_model.dart';
 import 'package:todo_app/todo_domain/models/task_status.dart';
 import 'package:todo_app/todo_domain/repo/hive_repo.dart';
-import 'dart:developer';
 
 class TodoBloc extends Bloc<TodoEvent, AppState> {
   final HiveRepo _hiveRepo;
@@ -22,6 +21,29 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     on<SetViewIndexTodoEvent>(_onSetIndexView);
     on<UpdateTodoEvent>(_onUpdate);
     on<DeleteTodoEvent>(_onDelete);
+    on<InsertTodoEvent>(_onInsert);
+  }
+
+  FutureOr<void> _onInsert(
+      InsertTodoEvent event, Emitter<AppState> emit) async {
+    try {
+      var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
+      emit(loadingAppState);
+      // BuiltList<Task>? tasks = await _hiveRepo.read();
+      // if (tasks == null) {
+      //   await _hiveRepo.create();
+      // }
+      await _hiveRepo.insert(event.task!);
+      BuiltList<Task>? newTasks = await _hiveRepo.read();
+      final AppState newAppState = state.rebuild((p0) => p0
+        ..tasks = newTasks?.toBuilder() ?? BuiltList<Task>([]).toBuilder()
+        ..status = Status.idle);
+      emit(newAppState);
+    } catch (e) {
+      addError(Exception("get all tasks error"), StackTrace.current);
+      DebugLogger debugLogger = DebugLogger();
+      debugLogger.log('Get error: $e');
+    }
   }
 
   FutureOr<void> _onReadAll(
@@ -29,8 +51,10 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     try {
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
-      await Future.delayed(const Duration(milliseconds: 300));
-      BuiltList<Task>? tasks = _hiveRepo.read();
+      BuiltList<Task>? tasks = await _hiveRepo.read();
+      // if (tasks == null) {
+      //   await _hiveRepo.create();
+      // }
       final AppState newAppState = state.rebuild((p0) => p0
         ..tasks = tasks?.toBuilder() ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
@@ -47,7 +71,10 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     try {
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
-      BuiltList<Task>? tasks = _hiveRepo.read();
+      BuiltList<Task>? tasks = await _hiveRepo.read();
+      if (tasks == null) {
+        await _hiveRepo.create();
+      }
       List<Task> doneTasks = [];
       if (tasks != null) {
         for (int i = 0; i < tasks.length; i++) {
@@ -60,7 +87,7 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
         ..tasks = doneTasks.build().toBuilder()
         // ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 100));
       emit(newAppState);
     } catch (e) {
       addError(Exception("get all done tasks error"), StackTrace.current);
@@ -74,7 +101,10 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     try {
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
-      BuiltList<Task>? tasks = _hiveRepo.read();
+      BuiltList<Task>? tasks = await _hiveRepo.read();
+      if (tasks == null) {
+        await _hiveRepo.create();
+      }
       List<Task> pendingTasks = [];
       if (tasks != null) {
         for (int i = 0; i < tasks.length; i++) {
@@ -87,7 +117,7 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
         ..tasks = pendingTasks.build().toBuilder()
         // ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 100));
       emit(newAppState);
     } catch (e) {
       addError(Exception("get all pending tasks error"), StackTrace.current);
@@ -101,7 +131,10 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     try {
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
-      BuiltList<Task>? tasks = _hiveRepo.read();
+      BuiltList<Task>? tasks = await _hiveRepo.read();
+      if (tasks == null) {
+        await _hiveRepo.create();
+      }
       List<Task> progressTasks = [];
       if (tasks != null) {
         for (int i = 0; i < tasks.length; i++) {
@@ -114,7 +147,7 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
         ..tasks = progressTasks.build().toBuilder()
         // ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 100));
       emit(newAppState);
     } catch (e) {
       addError(
@@ -145,12 +178,14 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     try {
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
-      _hiveRepo.delete(event.task!.id!);
-      var newTasks = _hiveRepo.read();
+      await _hiveRepo.delete(event.task!.id!);
+      BuiltList<Task>? newTasks = await _hiveRepo.read();
+      if (newTasks == null) {
+        await _hiveRepo.create();
+      }
       final AppState newAppState = state.rebuild((p0) => p0
         ..tasks = newTasks?.toBuilder() ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
-      log("length = ${newTasks.length}");
       emit(newAppState);
     } catch (e) {
       addError(Exception("delete task error"), StackTrace.current);
@@ -164,19 +199,18 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     try {
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
-
       Task task = state.tasks!
           .firstWhere((p0) => p0.id == state.viewIndex)
           .rebuild((p0) => p0..status = event.taskStatus);
-      log("EVENT Status: ${event.taskStatus}");
-      log("UPDATE: $task");
-      _hiveRepo.update(state.viewIndex!, task);
+      await _hiveRepo.update(state.viewIndex!, task);
 
-      var newTasks = _hiveRepo.read();
+      BuiltList<Task>? newTasks = await _hiveRepo.read();
+      if (newTasks == null) {
+        await _hiveRepo.create();
+      }
       final AppState newAppState = state.rebuild((p0) => p0
         ..tasks = newTasks?.toBuilder() ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
-      log("length = ${newTasks.length}");
       emit(newAppState);
     } catch (e) {
       addError(Exception("update task error"), StackTrace.current);
