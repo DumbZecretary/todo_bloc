@@ -6,5 +6,5 @@ part 'tasks_hive_model.g.dart';
 
 @HiveType(typeId: 0)
 class ListTaskHiveModel extends HiveObject {
-  late BuiltList<Task>? tasks;
+  BuiltList<Task>? tasks;
 }

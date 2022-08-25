@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:todo_app/config_domain/app_model/app_state.dart';
 import 'package:todo_app/theme/light_colors.dart';
+import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
 
 class TodoUserDetailsComponent extends StatelessWidget {
   const TodoUserDetailsComponent({
@@ -33,27 +36,31 @@ class TodoUserDetailsComponent extends StatelessWidget {
                     const SizedBox(
                       width: 24,
                     ),
-                    CircularPercentIndicator(
-                      radius: 36.0,
-                      lineWidth: 5.0,
-                      animation: true,
-                      percent: 0.75, // percent of done tasks / all tasks
-                      circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: LightColors.kRed,
-                      backgroundColor: LightColors.kDarkYellow,
-                      center: GestureDetector(
-                        onTap: () {
-                          // TODO: open pop up and setting name, desc, img
-                        },
-                        child: const CircleAvatar(
-                          backgroundColor: LightColors.kBlue,
-                          radius: 24.0,
-                          backgroundImage: AssetImage(
-                            'assets/images/avatar.png',
-                          ),
-                        ),
-                      ),
-                    ),
+                    BlocSelector<TodoBloc, AppState, double>(
+                        selector: (state) => state.percents![3],
+                        builder: (context, data) {
+                          return CircularPercentIndicator(
+                            radius: 36.0,
+                            lineWidth: 5.0,
+                            animation: true,
+                            percent: data, // percent of done tasks / all tasks
+                            circularStrokeCap: CircularStrokeCap.round,
+                            progressColor: LightColors.kRed,
+                            backgroundColor: LightColors.kDarkYellow,
+                            center: GestureDetector(
+                              onTap: () {
+                                // TODO: open pop up and setting name, desc, img
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: LightColors.kBlue,
+                                radius: 24.0,
+                                backgroundImage: AssetImage(
+                                  'assets/images/avatar.png',
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
                     const SizedBox(
                       width: 16,
                     ),
