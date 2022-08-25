@@ -87,3 +87,11 @@ abstract class UpdatePercentsTodoEvent extends TodoEvent
           [void Function(UpdatePercentsTodoEventBuilder) updates]) =
       _$UpdatePercentsTodoEvent;
 }
+
+abstract class GetTotalTasksTodoEvent extends TodoEvent
+    implements Built<GetTotalTasksTodoEvent, GetTotalTasksTodoEventBuilder> {
+  GetTotalTasksTodoEvent._();
+  factory GetTotalTasksTodoEvent(
+          [void Function(GetTotalTasksTodoEventBuilder) updates]) =
+      _$GetTotalTasksTodoEvent;
+}

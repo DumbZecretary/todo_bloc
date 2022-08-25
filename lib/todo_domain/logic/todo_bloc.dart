@@ -23,6 +23,7 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
     on<DeleteTodoEvent>(_onDelete);
     on<InsertTodoEvent>(_onInsert);
     on<UpdatePercentsTodoEvent>(_onUpdatePercents);
+    on<GetTotalTasksTodoEvent>(_onGetTotal);
   }
 
   FutureOr<void> _onInsert(
@@ -219,6 +220,7 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
   FutureOr<void> _onUpdatePercents(
       UpdatePercentsTodoEvent event, Emitter<AppState> emit) async {
     try {
+      await _onGetTotal(GetTotalTasksTodoEvent(), emit);
       var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingAppState);
 
@@ -258,6 +260,34 @@ class TodoBloc extends Bloc<TodoEvent, AppState> {
       final AppState newAppState = state.rebuild((p0) => p0
         ..percents = newPercents?.toBuilder() ??
             BuiltList<double>([0, 0, 0, 0]).toBuilder()
+        ..status = Status.idle);
+
+      emit(newAppState);
+    } catch (e) {
+      addError(Exception("update percents of domain todo error"),
+          StackTrace.current);
+      DebugLogger debugLogger = DebugLogger();
+      debugLogger.log('Get error: $e');
+    }
+  }
+
+  FutureOr<void> _onGetTotal(
+      GetTotalTasksTodoEvent event, Emitter<AppState> emit) async {
+    try {
+      var loadingAppState = state.rebuild((p0) => p0..status = Status.loading);
+      emit(loadingAppState);
+
+      int total = 0;
+
+      BuiltList<Task>? tasks = await _hiveRepo.read();
+      if (tasks == null) {
+        await _hiveRepo.create();
+      } else {
+        total = tasks.length;
+      }
+
+      final AppState newAppState = state.rebuild((p0) => p0
+        ..totalTasks = total
         ..status = Status.idle);
       await Future.delayed(const Duration(seconds: 0));
       emit(newAppState);

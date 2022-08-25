@@ -63,7 +63,7 @@ class _AddTaskComponentState extends State<AddTaskComponent> {
               const SubHeaderWidget(title: 'Short description'),
               TextFormField(
                 decoration: const InputDecoration(
-                  hintText: "Insert the short description of the task here",
+                  hintText: "Insert the short description here",
                   hintStyle: TextStyle(
                     color: Colors.black54,
                   ),
@@ -102,11 +102,16 @@ class _AddTaskComponentState extends State<AddTaskComponent> {
                       context: context,
                       builder: (context) {
                         return const AlertDialog(
-                          content: Text("Add new task successfully"),
+                          content: Text(
+                            "Add new task successfully",
+                            textAlign: TextAlign.center,
+                          ),
                         );
                       });
-                  Future.delayed(const Duration(milliseconds: 300));
-                  Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                  await Future.delayed(const Duration(milliseconds: 600))
+                      .then((value) {
+                    Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                  });
                 },
               ),
             ],

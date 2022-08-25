@@ -7,11 +7,13 @@ class TrackerCardWidget extends StatelessWidget {
   final String title;
   final String? subtitle;
   final VoidCallback onPress;
+  final bool? isActiveCircle;
 
   const TrackerCardWidget({
     required this.cardColor,
     required this.loadingPercent,
     required this.title,
+    this.isActiveCircle = true,
     this.subtitle,
     required this.onPress,
     Key? key,
@@ -36,21 +38,26 @@ class TrackerCardWidget extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: CircularPercentIndicator(
-                    animation: true,
-                    radius: 36.0,
-                    percent: loadingPercent,
-                    lineWidth: 5.0,
-                    circularStrokeCap: CircularStrokeCap.round,
-                    backgroundColor: Colors.white10,
-                    progressColor: Colors.white,
-                    center: Text(
-                      '${(loadingPercent * 100).round()}%',
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w700, color: Colors.white),
-                    ),
-                  ),
+                  child: isActiveCircle!
+                      ? CircularPercentIndicator(
+                          animation: true,
+                          radius: 36.0,
+                          percent: loadingPercent,
+                          lineWidth: 5.0,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          backgroundColor: Colors.white10,
+                          progressColor: Colors.white,
+                          center: Text(
+                            '${(loadingPercent * 100).round()}%',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                          ),
+                        )
+                      : const SizedBox(
+                          height: 36,
+                        ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,6 +82,11 @@ class TrackerCardWidget extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
+                    isActiveCircle!
+                        ? const SizedBox.shrink()
+                        : const SizedBox(
+                            height: 36,
+                          ),
                   ],
                 ),
               ],
