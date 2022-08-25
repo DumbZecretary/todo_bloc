@@ -15,11 +15,14 @@ class _$AppState extends AppState {
   final Status? status;
   @override
   final String? viewIndex;
+  @override
+  final BuiltList<double>? percents;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
 
-  _$AppState._({this.tasks, this.locale, this.status, this.viewIndex})
+  _$AppState._(
+      {this.tasks, this.locale, this.status, this.viewIndex, this.percents})
       : super._();
 
   @override
@@ -36,14 +39,16 @@ class _$AppState extends AppState {
         tasks == other.tasks &&
         locale == other.locale &&
         status == other.status &&
-        viewIndex == other.viewIndex;
+        viewIndex == other.viewIndex &&
+        percents == other.percents;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, tasks.hashCode), locale.hashCode), status.hashCode),
-        viewIndex.hashCode));
+        $jc($jc($jc($jc(0, tasks.hashCode), locale.hashCode), status.hashCode),
+            viewIndex.hashCode),
+        percents.hashCode));
   }
 
   @override
@@ -52,7 +57,8 @@ class _$AppState extends AppState {
           ..add('tasks', tasks)
           ..add('locale', locale)
           ..add('status', status)
-          ..add('viewIndex', viewIndex))
+          ..add('viewIndex', viewIndex)
+          ..add('percents', percents))
         .toString();
   }
 }
@@ -76,6 +82,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   String? get viewIndex => _$this._viewIndex;
   set viewIndex(String? viewIndex) => _$this._viewIndex = viewIndex;
 
+  ListBuilder<double>? _percents;
+  ListBuilder<double> get percents =>
+      _$this._percents ??= new ListBuilder<double>();
+  set percents(ListBuilder<double>? percents) => _$this._percents = percents;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -85,6 +96,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _locale = $v.locale;
       _status = $v.status;
       _viewIndex = $v.viewIndex;
+      _percents = $v.percents?.toBuilder();
       _$v = null;
     }
     return this;
@@ -112,12 +124,16 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               tasks: _tasks?.build(),
               locale: locale,
               status: status,
-              viewIndex: viewIndex);
+              viewIndex: viewIndex,
+              percents: _percents?.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'tasks';
         _tasks?.build();
+
+        _$failedField = 'percents';
+        _percents?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'AppState', _$failedField, e.toString());

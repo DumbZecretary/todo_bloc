@@ -1,11 +1,12 @@
+import 'dart:developer';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_app/todo_domain/models/task_model.dart';
 import 'package:todo_app/todo_domain/models/tasks_hive_model.dart';
 import 'package:todo_app/todo_domain/repo/abs_repo.dart';
-import 'dart:developer';
 
-class HiveRepo extends AbsRepo {
+class HiveRepo extends AbsTodoRepo {
   static HiveRepo? _instance;
   HiveRepo._internal() {
     _instance = this;
@@ -45,23 +46,20 @@ class HiveRepo extends AbsRepo {
     var hive = Hive.box<ListTaskHiveModel>('tasks');
     ListTaskHiveModel? listTasks = ListTaskHiveModel();
     listTasks.tasks = _tasks;
-    log('NEW LIST: ${listTasks.tasks}');
     await hive.put('tasks', listTasks);
     listTasks = hive.get('tasks');
-    log('READ LIST: ${listTasks?.tasks}');
   }
 
   @override
   read() async {
+    ListTaskHiveModel? listTasks;
+
     var hive = Hive.box<ListTaskHiveModel>('tasks');
-    ListTaskHiveModel? listTasks = ListTaskHiveModel();
-    try {
-      listTasks = hive.get('tasks');
-    } catch (e) {
+    listTasks = hive.get('tasks');
+    if (listTasks?.tasks == null) {
       await create();
       listTasks = hive.get('tasks');
     }
-    log('real READ LIST: ${listTasks?.tasks}');
     return listTasks?.tasks;
   }
 

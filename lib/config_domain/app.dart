@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:todo_app/config_domain/app_model/app_state.dart';
 import 'package:todo_app/theme/light_colors.dart';
 import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
+import 'package:todo_app/todo_domain/models/events.dart';
 import 'package:todo_app/todo_domain/repo/hive_repo.dart';
 import 'package:todo_app/todo_domain/view/screens/screens.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,22 +30,44 @@ class _TodoAppState extends State<TodoApp> {
       providers: [
         RepositoryProvider<HiveRepo>(create: (context) => HiveRepo()),
       ],
-      child: BlocProvider(
-        create: (context) => TodoBloc(
-          hiveRepo: (context).read<HiveRepo>(),
-          initialState: AppState.initial(),
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => TodoBloc(
+              hiveRepo: (context).read<HiveRepo>(),
+              initialState: AppState.initial(),
+            ),
+          ),
+        ],
         child: const TodoAppView(),
       ),
     );
   }
 }
 
-class TodoAppView extends StatelessWidget {
+class TodoAppView extends StatefulWidget {
   const TodoAppView({Key? key}) : super(key: key);
 
   @override
+  State<TodoAppView> createState() => _TodoAppViewState();
+}
+
+class _TodoAppViewState extends State<TodoAppView> {
+  @override
+  void initState() {
+    // TODO: get shared_preferences data from local - domain user
+    (context).read<TodoBloc>().add(ReadAllTaskTodoEvent());
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    (context).read<TodoBloc>().add(UpdatePercentsTodoEvent());
     return MaterialApp(
       title: 'Flutter Todo App',
       theme: ThemeData(

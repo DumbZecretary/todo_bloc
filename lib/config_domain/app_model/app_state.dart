@@ -14,6 +14,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   String? get viewIndex;
 
+  BuiltList<double>? get percents;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
@@ -22,7 +24,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return AppState((b) => b
       ..tasks = BuiltList<Task>([]).toBuilder()
       ..locale = 'en'
-      // TODO: change status to loading
+      ..percents = BuiltList<double>([0.0, 0.0, 0.0, 0.0]).toBuilder()
       ..status = Status.idle);
   }
 }

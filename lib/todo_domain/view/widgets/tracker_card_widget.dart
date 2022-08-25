@@ -5,14 +5,14 @@ class TrackerCardWidget extends StatelessWidget {
   final Color cardColor;
   final double loadingPercent;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final VoidCallback onPress;
 
   const TrackerCardWidget({
     required this.cardColor,
     required this.loadingPercent,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.onPress,
     Key? key,
   }) : super(key: key);
@@ -66,7 +66,7 @@ class TrackerCardWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      subtitle,
+                      subtitle ?? "",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

@@ -33,7 +33,7 @@ void bootstrap({required HiveRepo hiveRepo}) {
   Bloc.observer = TodoAppObserver();
 
   runZonedGuarded(
-    // TODO: add repo to TodoApp
+    // TODO: add repo shared_preferences get percent and user data to TodoApp
     () => runApp(
       TodoApp(
         hiveRepo: hiveRepo,
@@ -43,7 +43,7 @@ void bootstrap({required HiveRepo hiveRepo}) {
   );
 }
 
-// TODO: implement progress bar
+// TODO:  fix implement progress bar
 // TODO: implement user domain
 // TODO: implement localization
 // TODO: unit test

@@ -1,6 +1,6 @@
 import 'package:todo_app/todo_domain/models/task_model.dart';
 
-abstract class AbsRepo {
+abstract class AbsTodoRepo {
   create();
   insert(Task task);
   read();
