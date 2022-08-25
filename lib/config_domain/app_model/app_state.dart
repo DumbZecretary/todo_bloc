@@ -16,6 +16,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   BuiltList<double>? get percents;
 
+  int? get totalTasks;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 
@@ -25,6 +27,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       ..tasks = BuiltList<Task>([]).toBuilder()
       ..locale = 'en'
       ..percents = BuiltList<double>([0.0, 0.0, 0.0, 0.0]).toBuilder()
+      ..totalTasks = 0
       ..status = Status.idle);
   }
 }

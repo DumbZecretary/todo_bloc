@@ -100,17 +100,25 @@ class TodoTrackerComponent extends StatelessWidget {
                           ),
                           const SizedBox(width: 20.0),
                           Expanded(
-                            child: TrackerCardWidget(
-                              cardColor: LightColors.kBlue,
-                              loadingPercent: data.percents![0],
-                              title: 'All',
-                              onPress: () {
-                                (context)
-                                    .read<TodoBloc>()
-                                    .add(ReadAllTaskTodoEvent());
-                                Navigator.of(context).pushNamed('/list');
-                              },
-                            ),
+                            child: BlocSelector<TodoBloc, AppState, int?>(
+                                selector: (state) => state.totalTasks,
+                                builder: (context, total) {
+                                  return TrackerCardWidget(
+                                    cardColor: LightColors.kBlue,
+                                    loadingPercent: data.percents![0],
+                                    isActiveCircle: false,
+                                    title: 'All',
+                                    subtitle: total! > 1
+                                        ? '$total Tasks'
+                                        : "$total Task",
+                                    onPress: () {
+                                      (context)
+                                          .read<TodoBloc>()
+                                          .add(ReadAllTaskTodoEvent());
+                                      Navigator.of(context).pushNamed('/list');
+                                    },
+                                  );
+                                }),
                           ),
                         ],
                       ),

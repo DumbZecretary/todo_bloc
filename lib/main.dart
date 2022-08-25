@@ -43,7 +43,6 @@ void bootstrap({required HiveRepo hiveRepo}) {
   );
 }
 
-// TODO:  fix implement progress bar
 // TODO: implement user domain
 // TODO: implement localization
 // TODO: unit test
