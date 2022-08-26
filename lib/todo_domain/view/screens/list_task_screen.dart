@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/config_domain/app_model/app_state.dart';
+import 'package:todo_app/todo_domain/models/todo_state.dart';
 import 'package:todo_app/config_domain/app_model/app_status.dart';
 import 'package:todo_app/theme/light_colors.dart';
 import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
@@ -17,7 +17,7 @@ class ListTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<TodoBloc, AppState, Status>(
+    return BlocSelector<TodoBloc, TodoState, Status>(
         selector: (state) => state.status!,
         builder: (context, data) {
           if (data == Status.idle) {
@@ -32,7 +32,7 @@ class ListTaskScreen extends StatelessWidget {
               body: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: BlocSelector<TodoBloc, AppState, BuiltList<Task>?>(
+                  child: BlocSelector<TodoBloc, TodoState, BuiltList<Task>?>(
                       selector: (state) => state.tasks,
                       builder: (context, data) {
                         if (data == null) {

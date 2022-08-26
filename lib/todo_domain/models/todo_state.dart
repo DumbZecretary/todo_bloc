@@ -3,9 +3,9 @@ import 'package:built_value/built_value.dart';
 import 'package:todo_app/config_domain/app_model/app_status.dart';
 import 'package:todo_app/todo_domain/models/task_model.dart';
 
-part 'app_state.g.dart';
+part 'todo_state.g.dart';
 
-abstract class AppState implements Built<AppState, AppStateBuilder> {
+abstract class TodoState implements Built<TodoState, TodoStateBuilder> {
   BuiltList<Task>? get tasks;
 
   String? get locale;
@@ -18,12 +18,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   int? get totalTasks;
 
-  AppState._();
-  factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
+  TodoState._();
+  factory TodoState([void Function(TodoStateBuilder) updates]) = _$TodoState;
 
-  factory AppState.initial(
+  factory TodoState.initial(
       {BuiltList<Task>? tasks, String? locale, Status? status}) {
-    return AppState((b) => b
+    return TodoState((b) => b
       ..tasks = BuiltList<Task>([]).toBuilder()
       ..locale = 'en'
       ..percents = BuiltList<double>([0.0, 0.0, 0.0, 0.0]).toBuilder()
