@@ -6,7 +6,7 @@ Coverage: (no data)
 
 ## UI
 
-|   | ![main screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/1.png?raw=true)  | ![side menu](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/2.png?raw=true)  | ![all tasks screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/3.png?raw=true)  |
+| ![icon](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/icon.png?raw=true)  | ![main screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/1.png?raw=true)  | ![side menu](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/2.png?raw=true)  | ![all tasks screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/3.png?raw=true)  |
 |---|---|---|---|
 | ![by status list tasks screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/4.png?raw=true)  | ![create screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/5.png?raw=true)  | ![update screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/6.png?raw=true)  | ![update result screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/7.png?raw=true)  |
 
