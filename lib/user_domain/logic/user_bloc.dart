@@ -68,7 +68,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       var loadingUserState =
           state.rebuild((p0) => p0..status = UserStatus.loading);
       emit(loadingUserState);
-      // TODO: save image path
+      var newUserState = state.rebuild((p0) => p0
+        ..path = event.path
+        ..status = UserStatus.idle);
+      emit(newUserState);
     } catch (e) {
       addError(Exception("set user detail (name and decs) error"),
           StackTrace.current);
