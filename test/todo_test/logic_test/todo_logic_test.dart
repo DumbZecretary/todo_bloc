@@ -431,4 +431,156 @@ void main() {
       ],
     );
   });
+  // -----------------------------------------------------------------
+  group("Todo test update task", () {
+    late MockTodoRepo mockTodoRepo = MockTodoRepo();
+    var updateEvent =
+        UpdateTodoEvent((b) => b..taskStatus = TaskStatus.progress);
+    TodoBloc todoBloc() {
+      return TodoBloc(
+          initialState: TodoState((b) => b
+            ..status = Status.idle
+            ..viewIndex = "id"
+            ..totalTasks = 1
+            ..locale = 'en'
+            ..percents = BuiltList<double>([1.0, 1.0, 0.0, 0.0]).toBuilder()
+            ..tasks = BuiltList<Task>([
+              Task((b) => b
+                ..status = TaskStatus.pending
+                ..id = "id"
+                ..title = "title"
+                ..desc = "desc")
+            ]).toBuilder()),
+          hiveRepo: mockTodoRepo);
+    }
+
+    setUp(() {
+      registerFallbackValue(Task((b) => b
+        ..status = TaskStatus.progress
+        ..id = "id"
+        ..title = "title"
+        ..desc = "desc"));
+    });
+
+    blocTest<TodoBloc, TodoState>(
+      "emit new state after update task",
+      setUp: () {
+        when(() => mockTodoRepo.update("id", any()))
+            .thenAnswer((invocation) async {});
+        when(() => mockTodoRepo.read()).thenAnswer((invocation) async {
+          return BuiltList<Task>([
+            Task((b) => b
+              ..status = TaskStatus.progress
+              ..id = "id"
+              ..title = "title"
+              ..desc = "desc")
+          ]);
+        });
+      },
+      build: todoBloc,
+      act: (bloc) => bloc.add(updateEvent),
+      expect: () => [
+        TodoState((b) => b
+          ..tasks = BuiltList<Task>([
+            Task((b) => b
+              ..status = TaskStatus.pending
+              ..id = "id"
+              ..title = "title"
+              ..desc = "desc")
+          ]).toBuilder()
+          ..status = Status.loading
+          ..locale = 'en'
+          ..viewIndex = "id"
+          ..totalTasks = 1
+          ..percents = BuiltList<double>([1.0, 1.0, 0.0, 0.0]).toBuilder()),
+      ],
+    );
+    blocTest<TodoBloc, TodoState>(
+      "emit new state after update task but error",
+      setUp: () {
+        when(() => mockTodoRepo.update("id", any()))
+            .thenAnswer((invocation) async {});
+        when(() => mockTodoRepo.read()).thenThrow(Error());
+      },
+      build: todoBloc,
+      act: (bloc) => bloc.add(updateEvent),
+      expect: () => [
+        TodoState((b) => b
+          ..tasks = BuiltList<Task>([
+            Task((b) => b
+              ..status = TaskStatus.pending
+              ..id = "id"
+              ..title = "title"
+              ..desc = "desc")
+          ]).toBuilder()
+          ..status = Status.loading
+          ..locale = 'en'
+          ..viewIndex = "id"
+          ..totalTasks = 1
+          ..percents = BuiltList<double>([1.0, 1.0, 0.0, 0.0]).toBuilder()),
+      ],
+    );
+  });
+  // -----------------------------------------------------------------
+  group("Todo test update percents", () {
+    late MockTodoRepo mockTodoRepo = MockTodoRepo();
+    var updateEvent = UpdatePercentsTodoEvent();
+    TodoBloc todoBloc() {
+      return TodoBloc(
+          initialState: TodoState((b) => b
+            ..status = Status.idle
+            ..percents = BuiltList<double>([1.0, 1.0, 0.0, 0.0]).toBuilder()
+            ..tasks = BuiltList<Task>([]).toBuilder()),
+          hiveRepo: mockTodoRepo);
+    }
+
+    blocTest<TodoBloc, TodoState>(
+      "emit new state after update percents",
+      setUp: () {
+        when(() => mockTodoRepo.read()).thenAnswer((invocation) async {
+          return BuiltList<Task>([
+            Task((b) => b
+              ..status = TaskStatus.progress
+              ..id = "id"
+              ..title = "title"
+              ..desc = "desc"),
+            Task((b) => b
+              ..status = TaskStatus.pending
+              ..id = "id2"
+              ..title = "title2"
+              ..desc = "desc2"),
+            Task((b) => b
+              ..status = TaskStatus.done
+              ..id = "id3"
+              ..title = "title3"
+              ..desc = "desc3")
+          ]);
+        });
+      },
+      build: todoBloc,
+      act: (bloc) => bloc.add(updateEvent),
+      expect: () => [
+        TodoState((b) => b
+          ..tasks = BuiltList<Task>([]).toBuilder()
+          ..status = Status.loading
+          ..percents = BuiltList<double>([1.0, 1.0, 0.0, 0.0]).toBuilder()),
+      ],
+    );
+    blocTest<TodoBloc, TodoState>(
+      "emit new state after update percents but error",
+      setUp: () {
+        when(() => mockTodoRepo.read()).thenThrow(Error());
+      },
+      build: todoBloc,
+      act: (bloc) => bloc.add(updateEvent),
+      expect: () => [
+        TodoState((b) => b
+          ..tasks = BuiltList<Task>([]).toBuilder()
+          ..status = Status.loading
+          ..percents = BuiltList<double>([1.0, 1.0, 0.0, 0.0]).toBuilder()),
+      ],
+    );
+  });
 }
+
+// TODO: next, open coverage for info

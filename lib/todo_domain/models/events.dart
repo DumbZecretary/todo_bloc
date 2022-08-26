@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:todo_app/todo_domain/models/task_model.dart';
 import 'package:todo_app/todo_domain/models/task_status.dart';
@@ -80,7 +79,6 @@ abstract class UpdateTodoEvent extends TodoEvent
 
 abstract class UpdatePercentsTodoEvent extends TodoEvent
     implements Built<UpdatePercentsTodoEvent, UpdatePercentsTodoEventBuilder> {
-  BuiltList<int>? get percents;
   UpdatePercentsTodoEvent._();
   factory UpdatePercentsTodoEvent(
           [void Function(UpdatePercentsTodoEventBuilder) updates]) =

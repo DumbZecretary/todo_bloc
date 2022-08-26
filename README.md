@@ -2,7 +2,9 @@
 
 A new Flutter Simple Todo App project. In this project, I use DDD and TDD. There are two Domain, User and Todo.
 
-Coverage: (no data)
+Coverage: 
+
+![coverage](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/coverage.png?raw=true)
 
 ## UI
 

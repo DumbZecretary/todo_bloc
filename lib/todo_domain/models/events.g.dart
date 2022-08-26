@@ -579,14 +579,11 @@ class UpdateTodoEventBuilder
 }
 
 class _$UpdatePercentsTodoEvent extends UpdatePercentsTodoEvent {
-  @override
-  final BuiltList<int>? percents;
-
   factory _$UpdatePercentsTodoEvent(
           [void Function(UpdatePercentsTodoEventBuilder)? updates]) =>
       (new UpdatePercentsTodoEventBuilder()..update(updates))._build();
 
-  _$UpdatePercentsTodoEvent._({this.percents}) : super._();
+  _$UpdatePercentsTodoEvent._() : super._();
 
   @override
   UpdatePercentsTodoEvent rebuild(
@@ -600,19 +597,17 @@ class _$UpdatePercentsTodoEvent extends UpdatePercentsTodoEvent {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is UpdatePercentsTodoEvent && percents == other.percents;
+    return other is UpdatePercentsTodoEvent;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, percents.hashCode));
+    return 503064220;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'UpdatePercentsTodoEvent')
-          ..add('percents', percents))
-        .toString();
+    return newBuiltValueToStringHelper(r'UpdatePercentsTodoEvent').toString();
   }
 }
 
@@ -621,20 +616,7 @@ class UpdatePercentsTodoEventBuilder
         Builder<UpdatePercentsTodoEvent, UpdatePercentsTodoEventBuilder> {
   _$UpdatePercentsTodoEvent? _$v;
 
-  ListBuilder<int>? _percents;
-  ListBuilder<int> get percents => _$this._percents ??= new ListBuilder<int>();
-  set percents(ListBuilder<int>? percents) => _$this._percents = percents;
-
   UpdatePercentsTodoEventBuilder();
-
-  UpdatePercentsTodoEventBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _percents = $v.percents?.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
 
   @override
   void replace(UpdatePercentsTodoEvent other) {
@@ -651,21 +633,7 @@ class UpdatePercentsTodoEventBuilder
   UpdatePercentsTodoEvent build() => _build();
 
   _$UpdatePercentsTodoEvent _build() {
-    _$UpdatePercentsTodoEvent _$result;
-    try {
-      _$result =
-          _$v ?? new _$UpdatePercentsTodoEvent._(percents: _percents?.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'percents';
-        _percents?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'UpdatePercentsTodoEvent', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ?? new _$UpdatePercentsTodoEvent._();
     replace(_$result);
     return _$result;
   }
