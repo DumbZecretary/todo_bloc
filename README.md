@@ -18,7 +18,7 @@ The model for Hive can't be tested 100% because I don't mock to test the concept
 
 Android real devices: :white_check_mark:
 
-IOS real devices: :x:
+IOS real devices: :x: ( I don't have any IOS devices :disappointed_relieved: )
 
 Android simulators: :white_check_mark:
 
