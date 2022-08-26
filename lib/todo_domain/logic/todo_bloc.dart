@@ -191,9 +191,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       await _hiveRepo.update(state.viewIndex!, task);
 
       BuiltList<Task>? newTasks = await _hiveRepo.read();
-      if (newTasks == null) {
-        await _hiveRepo.create();
-      }
+
       final TodoState newTodoState = state.rebuild((p0) => p0
         ..tasks = newTasks?.toBuilder() ?? BuiltList<Task>([]).toBuilder()
         ..status = Status.idle);
@@ -250,8 +248,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
           [1.0, percentPending, percentInProgress, percentDone]);
 
       final TodoState newTodoState = state.rebuild((p0) => p0
-        ..percents = newPercents?.toBuilder() ??
-            BuiltList<double>([0, 0, 0, 0]).toBuilder()
+        ..percents = newPercents!.toBuilder()
         ..status = Status.idle);
 
       emit(newTodoState);
