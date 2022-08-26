@@ -54,11 +54,7 @@ class HiveRepo extends AbsTodoRepo {
 
     var hive = Hive.box<ListTaskHiveModel>('tasks');
     listTasks = hive.get('tasks');
-    if (listTasks?.tasks == null) {
-      await create();
-      listTasks = hive.get('tasks');
-    }
-    return listTasks?.tasks;
+    return listTasks?.tasks ?? BuiltList<Task>([]);
   }
 
   @override
