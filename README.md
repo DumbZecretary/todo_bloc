@@ -6,6 +6,8 @@ Coverage:
 
 ![coverage](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/coverage.png?raw=true)
 
+The model for Hive can't be tested 100% because I don't mock to test the concept of Hive. I think mocking this is unnecessary.
+
 ## UI
 
 | ![icon](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/icon.png?raw=true)  | ![main screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/1.png?raw=true)  | ![side menu](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/2.png?raw=true)  | ![all tasks screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/3.png?raw=true)  |
