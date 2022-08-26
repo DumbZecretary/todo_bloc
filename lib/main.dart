@@ -42,6 +42,5 @@ void bootstrap(
   );
 }
 
-// TODO: implement change user image
 // TODO: implement localization
 // TODO: unit test

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:todo_app/theme/light_colors.dart';
 import 'package:todo_app/todo_domain/view/widgets/widgets.dart';
 import 'package:todo_app/user_domain/logic/user_bloc.dart';
@@ -93,6 +96,19 @@ class _EditDetailUserComponentState extends State<EditDetailUserComponent> {
           height: 32,
         ),
         ActionButtonWidget(
+            title: "Change avatar",
+            color: Colors.deepPurpleAccent,
+            onPress: () async {
+              await pickImage().then((value) {
+                (context).read<UserBloc>().add(
+                      SetUserImageUserEvent((b) => b..path = value),
+                    );
+              });
+            }),
+        const SizedBox(
+          height: 32,
+        ),
+        ActionButtonWidget(
           title: "Update",
           color: LightColors.kBlue,
           onPress: () async {
@@ -120,5 +136,19 @@ class _EditDetailUserComponentState extends State<EditDetailUserComponent> {
         ),
       ],
     );
+  }
+}
+
+Future pickImage() async {
+  try {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    } else {
+      log("Path is: ${image.path}");
+      return image.path;
+    }
+  } catch (e) {
+    log("ERROR when picking image: $e");
   }
 }
