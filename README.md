@@ -14,6 +14,16 @@ The model for Hive can't be tested 100% because I don't mock to test the concept
 |---|---|---|---|
 | ![by status list tasks screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/4.png?raw=true)  | ![create screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/5.png?raw=true)  | ![update screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/6.png?raw=true)  | ![update result screen](https://github.com/DumbZecretary/todo_bloc/blob/master/images_makedown/7.png?raw=true)  |
 
+### Checking the UI, Splash Screen and App Icon:
+
+Android real devices: :white_check_mark:
+
+IOS real devices: :x: ( I don't have any IOS devices :disappointed_relieved: )
+
+Android simulators: :white_check_mark:
+
+IOS simulators: :white_check_mark:
+
 ## Troubleshoot
 
 This project using Hive. But Hive has a problem itself. Please check the link below:
