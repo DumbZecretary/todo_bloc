@@ -68,6 +68,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       var loadingUserState =
           state.rebuild((p0) => p0..status = UserStatus.loading);
       emit(loadingUserState);
+      await _prefsRepo
+          .write(data: [state.name ?? "", state.decs ?? "", event.path ?? ""]);
       var newUserState = state.rebuild((p0) => p0
         ..path = event.path
         ..status = UserStatus.idle);

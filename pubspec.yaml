@@ -27,12 +27,13 @@ dependencies:
   hive_flutter: ^1.1.0
   uuid: ^3.0.6
   image_picker: ^0.8.5+3
-  bloc_test: ^9.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
+  bloc_test: ^9.1.0
+  hive_test: ^1.0.1
   built_value_generator: ^8.4.0
   hive_generator: ^1.1.3
   build_runner: ^2.2.0

@@ -70,9 +70,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       var loadingTodoState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingTodoState);
       BuiltList<Task>? tasks = await _hiveRepo.read();
-      if (tasks == null) {
-        await _hiveRepo.create();
-      }
       List<Task> doneTasks = [];
       if (tasks != null) {
         for (int i = 0; i < tasks.length; i++) {
@@ -98,9 +95,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       var loadingTodoState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingTodoState);
       BuiltList<Task>? tasks = await _hiveRepo.read();
-      if (tasks == null) {
-        await _hiveRepo.create();
-      }
       List<Task> pendingTasks = [];
       if (tasks != null) {
         for (int i = 0; i < tasks.length; i++) {
@@ -126,9 +120,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       var loadingTodoState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingTodoState);
       BuiltList<Task>? tasks = await _hiveRepo.read();
-      if (tasks == null) {
-        await _hiveRepo.create();
-      }
       List<Task> progressTasks = [];
       if (tasks != null) {
         for (int i = 0; i < tasks.length; i++) {
@@ -154,6 +145,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     try {
       var loadingTodoState = state.rebuild((p0) => p0..status = Status.loading);
       emit(loadingTodoState);
+      await _hiveRepo.read();
       final TodoState newTodoState = state.rebuild((p0) => p0
         ..viewIndex = event.value
         ..status = Status.idle);
