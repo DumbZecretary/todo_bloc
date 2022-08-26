@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/config_domain/app_model/app_state.dart';
+import 'package:todo_app/todo_domain/models/todo_state.dart';
 import 'package:todo_app/config_domain/app_model/app_status.dart';
 import 'package:todo_app/theme/light_colors.dart';
 import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
@@ -15,7 +15,7 @@ class TodoTrackerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocBuilder<TodoBloc, AppState>(builder: (context, data) {
+      child: BlocBuilder<TodoBloc, TodoState>(builder: (context, data) {
         if (data.status! == Status.idle) {
           return Column(
             children: [
@@ -46,7 +46,7 @@ class TodoTrackerComponent extends StatelessWidget {
                 color: Colors.transparent,
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                 child:
-                    BlocBuilder<TodoBloc, AppState>(builder: (context, data) {
+                    BlocBuilder<TodoBloc, TodoState>(builder: (context, data) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -100,7 +100,7 @@ class TodoTrackerComponent extends StatelessWidget {
                           ),
                           const SizedBox(width: 20.0),
                           Expanded(
-                            child: BlocSelector<TodoBloc, AppState, int?>(
+                            child: BlocSelector<TodoBloc, TodoState, int?>(
                                 selector: (state) => state.totalTasks,
                                 builder: (context, total) {
                                   return TrackerCardWidget(

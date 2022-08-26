@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/config_domain/app_model/app_state.dart';
+import 'package:todo_app/todo_domain/models/todo_state.dart';
 import 'package:todo_app/theme/light_colors.dart';
 import 'package:todo_app/todo_domain/logic/todo_bloc.dart';
 import 'package:todo_app/todo_domain/models/events.dart';
@@ -19,11 +19,11 @@ class TaskDetailComponent extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: SingleChildScrollView(
-          child: BlocSelector<TodoBloc, AppState, String>(
+          child: BlocSelector<TodoBloc, TodoState, String>(
               selector: (state) => state.viewIndex ?? "",
               builder: (context, data) {
                 if (data.isNotEmpty) {
-                  return BlocSelector<TodoBloc, AppState, Task>(
+                  return BlocSelector<TodoBloc, TodoState, Task>(
                       selector: (state) => state.tasks!.where((p0) {
                             return p0.id == state.viewIndex;
                           }).first,

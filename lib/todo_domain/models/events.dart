@@ -1,6 +1,5 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:todo_app/config_domain/app_model/app_state.dart';
 import 'package:todo_app/todo_domain/models/task_model.dart';
 import 'package:todo_app/todo_domain/models/task_status.dart';
 

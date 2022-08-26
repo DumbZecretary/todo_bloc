@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_state.dart';
+part of 'todo_state.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-class _$AppState extends AppState {
+class _$TodoState extends TodoState {
   @override
   final BuiltList<Task>? tasks;
   @override
@@ -20,10 +20,10 @@ class _$AppState extends AppState {
   @override
   final int? totalTasks;
 
-  factory _$AppState([void Function(AppStateBuilder)? updates]) =>
-      (new AppStateBuilder()..update(updates))._build();
+  factory _$TodoState([void Function(TodoStateBuilder)? updates]) =>
+      (new TodoStateBuilder()..update(updates))._build();
 
-  _$AppState._(
+  _$TodoState._(
       {this.tasks,
       this.locale,
       this.status,
@@ -33,16 +33,16 @@ class _$AppState extends AppState {
       : super._();
 
   @override
-  AppState rebuild(void Function(AppStateBuilder) updates) =>
+  TodoState rebuild(void Function(TodoStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AppStateBuilder toBuilder() => new AppStateBuilder()..replace(this);
+  TodoStateBuilder toBuilder() => new TodoStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AppState &&
+    return other is TodoState &&
         tasks == other.tasks &&
         locale == other.locale &&
         status == other.status &&
@@ -65,7 +65,7 @@ class _$AppState extends AppState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'AppState')
+    return (newBuiltValueToStringHelper(r'TodoState')
           ..add('tasks', tasks)
           ..add('locale', locale)
           ..add('status', status)
@@ -76,8 +76,8 @@ class _$AppState extends AppState {
   }
 }
 
-class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
-  _$AppState? _$v;
+class TodoStateBuilder implements Builder<TodoState, TodoStateBuilder> {
+  _$TodoState? _$v;
 
   ListBuilder<Task>? _tasks;
   ListBuilder<Task> get tasks => _$this._tasks ??= new ListBuilder<Task>();
@@ -104,9 +104,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   int? get totalTasks => _$this._totalTasks;
   set totalTasks(int? totalTasks) => _$this._totalTasks = totalTasks;
 
-  AppStateBuilder();
+  TodoStateBuilder();
 
-  AppStateBuilder get _$this {
+  TodoStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _tasks = $v.tasks?.toBuilder();
@@ -121,24 +121,24 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 
   @override
-  void replace(AppState other) {
+  void replace(TodoState other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$AppState;
+    _$v = other as _$TodoState;
   }
 
   @override
-  void update(void Function(AppStateBuilder)? updates) {
+  void update(void Function(TodoStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  AppState build() => _build();
+  TodoState build() => _build();
 
-  _$AppState _build() {
-    _$AppState _$result;
+  _$TodoState _build() {
+    _$TodoState _$result;
     try {
       _$result = _$v ??
-          new _$AppState._(
+          new _$TodoState._(
               tasks: _tasks?.build(),
               locale: locale,
               status: status,
@@ -155,7 +155,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _percents?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'AppState', _$failedField, e.toString());
+            r'TodoState', _$failedField, e.toString());
       }
       rethrow;
     }
